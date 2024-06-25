@@ -196,5 +196,12 @@ $("#selectAreaBtn").click(function () {});
 function setDetailPage(item) {
     console.log(item);
 
-    $("#areaDetail").html(item.title);
+    let sumbnail = item.firstimage != "" ? item.firstimage : "img/noimg.png";
+
+    let table = `<img src=${sumbnail}>`;
+
+    $("#sumbnailArea").html(table);
+    $("#commonInfos").html(table);
+
+    // $("#areaDetail").html(item.title);
 }
