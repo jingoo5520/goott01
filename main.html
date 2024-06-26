@@ -101,7 +101,7 @@
                         id="navbarCollapse"
                     >
                         <div class="navbar-nav ms-auto">
-                            <a href="index.html" class="nav-item nav-link"
+                            <a href="main.html" class="nav-item nav-link"
                                 >Home</a
                             >
 
@@ -354,25 +354,7 @@
         <script src="lib/lightbox/js/lightbox.min.js"></script>
 
         <!-- Template Javascript -->
+        <script src="js/common.js"></script>
         <script src="js/main.js"></script>
-
-        <script>
-            ajaxRequest(
-                areaBasedContentsUrl,
-                {
-                    numOfRows: "20",
-                    pageNo: "0",
-                    MobileOS: "ETC",
-                    MobileApp: "AppTest",
-                    serviceKey: apiKey,
-                    _type: "json",
-                    contentTypeId: 12,
-                },
-                function (data) {
-                    let itemList = data.response.body.items.item;
-                    drawList(itemList);
-                }
-            );
-        </script>
     </body>
 </html>

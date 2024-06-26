@@ -1,0 +1,177 @@
+카페24
+https://hosting.cafe24.com
+
+TourAPI
+https://api.visitkorea.or.kr/#/
+
+프로젝트 기간
+10일에서 14일정도 기간
+
+멤버(1팀)
+강진구
+장준호
+이현명
+윤희성
+신용호
+석정헌
+김민성
+김준범
+
+JSON API 데이터 받고 출력하기
+
+id: goott01
+pwd: goott010101 
+db pwd: go240612!
+
+프로젝트
+회의때마다 기록남기기
+날짜, 결정사항, 참가자 등등
+
+[1차 미니프로젝트 관련 공지] 
+지도(위치정보) 사용할 수 있으면 해보기
+찜 기능구현시 쿠키 활용
+
+6. 11 미니프로젝트 1조
+회의내용
+-호스팅 방식: cafe24 호스팅 사용
+-API : tour API
+
+6. 12 
+(점심시간)
+회의내용
+-예제 템플릿 공유
+-13일 내에 각자 템플릿 찾아서 공유, 투표예정
+
+통합검색 API
+각 카테고리별 데이터 API
+
+각페이지 검색에서 관광타입 빼기
+
+toul API 사이트 홈페이지, 관광지 목록 페이지를 녹일 수 있는 템플릿 고르기
+템플릿을 이용해 1인당 1카테고리별 목록 페이지를 자기 개성에 맞게 만들기
+-실제 이용할 사이트가 아님
+-단순 공부 목적이기 때문에 일괄성 있게 할 필요 없음(전부 다 달라도 상관없음)
+-여러 사람이 만든 페이지들을 하나로 뭉쳐 사이트를 제작하고 호스팅해보는 것에 의의
+
+즉 만들어야 할 페이지:
+1. 각 카테고리로 이동할 수 있는 버튼을 8개정도 넣을 수 있는 메인 페이지
+2. 각 카테고리별 목록 페이지
+3. 목록 상세페이지
+(검색기능, 목록 상세 페이지 등 모두 템플릿 내에서 구해서 알아서 구현, 안해도됨)
+
+템플릿 고르고 메인 페이지만 의견내서 모으면 같이 해야할 일은 끝인것같습니다.
+그리고 서로 페이지에 무슨 기능넣었는지 정도 알려주면 하고싶은 사람들은 하면 될듯
+혹시 검색기능 넣으실 분은 관광타입은 빼고 하는걸로
+
+* 지도(위치정보) 사용할 수 있으면 해보기
+* 찜 기능구현시 쿠키 활용 하기
+
+6/18 화
+
+템플릿 선정 완료: environs
+https://themewagon.github.io/environs/index.html
+
+6/20 목
+
+카테고리 나누기
+강진구: 관광지
+장준호: 문화시설
+이현명: 축제공연행사
+윤희성: 여행코스
+신용호: 레포츠
+석정헌: 숙박
+김민성: 쇼핑
+김준범: 음식점
+
+Junho Jang (장준호)
+Jingu Kang (강진구)
+Junbeom Kim (김준범)
+Minseong Kim (김민성)
+Hyunmyung Lee (이현명)
+Jeongheon Seok (석정헌)
+Yongho Shin (신용호)
+Heesung Yoon (윤희성)
+
+찜기능
+맵, 마커, 카카오 공유하기 등등 사용해보기
+pagination or 다음 페이지로 사용해보기, 스크롤 내릴 때 마다 데이터 더 보여주기
+
+프로젝트 만들기
+1. index.html 에서 각자의 페이지로 이동할 수 있도록 만들기
+2. 각자 list page, detail page를 모두 구성
+3. 찜 기능 구현(쿠키 이용)
+4. alert창은 디버그용으로만 사용, 사용자에게 보여주는 알림창은 modal을 이용
+5. 더보기 버튼 구현(pagination or 무한 스크롤..)
+6. 현재 페이지의 검색 기능
+7. 지도 넣기
+8. (option)소셜 공유하기(카카오)
+9. (option)데이터 정렬
+10. (option)지역 - 시군구 나누기
+
+index.html 은 테마, 멘트정도 바꾸고 
+
+파일 이름 통일
+찜기능(쿠키) 통일
+카테고리이름-main.html
+카테고리이름-sub.html
+
+~5일 까지
+
+detailPage.html
+탭1
+대표 이미지,  우편번호, 홈페이지, 주소, 개요, 좌표, 지도
+
+탭2
+소개정보
+ <contentid>126905</contentid>
+    <contenttypeid>12</contenttypeid>
+    <heritage1>0</heritage1>
+    <heritage2>0</heritage2>
+    <heritage3>0</heritage3>
+    <infocenter>033-435-6035</infocenter>
+    <opendate>1998년 7월 14일</opendate>
+    <restdate>연중무휴</restdate>
+    <expguide></expguide>
+    <expagerange></expagerange>
+    <accomcount>산림휴양(등산) 1,500명 / 숙박 110명</accomcount>
+    <useseason></useseason>
+    <usetime></usetime>
+    <parking>있음</parking>
+    <chkbabycarriage>없음</chkbabycarriage>
+    <chkpet>불가</chkpet>
+    <chkcreditcard>없음</chkcreditcard>
+
+
+탭3
+추가이미지
+
+
+2024-06-25
+
+1) index.html 가운데 멘트?
+Goott Academy
+1st mini Project - Group 1
+2024. ~ 2024. 07. 05
+개요
+
+2) 각 카테고리 메인, 디테일 파일명 통일
+-각 카테고리 영문 명
+-각 카테고리 이미지
+
+3) primary color, footer bg color, text-color
+
+4) index.html 대표이미지 3장~
+
+5) navbar 디자인 
+
+6) 쿠키 폼?
+
+7) footer 내용
+We are
+-1조원 이름들 - 카테고리
+
+Project
+-프로젝트 명
+-프로젝트 기간
+
+ 
