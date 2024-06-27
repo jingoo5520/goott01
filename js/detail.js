@@ -1,4 +1,4 @@
-let loadedTabs = [false, false, false];
+let loadedTabs = [false, false];
 
 $(function () {
     console.log("detailPage");
@@ -40,20 +40,22 @@ function setDetailPage(contentId, tab) {
                     let images = data.response.body.items.item;
                     let imageArray = [];
 
-                    for (let i = 0; i < images.length; i++) {
-                        imageArray.push(images[i].originimgurl);
+                    // 이미지가 없는 경우
+                    if (data.response.body.totalCount == 0) {
+                        imageArray[0] = "img/noimg.png";
+                    } else {
+                        for (let i = 0; i < images.length; i++) {
+                            imageArray.push(images[i].originimgurl);
+                        }
                     }
 
-                    console.log(imageArray);
-
                     $("#imgArea").html(makeCarouselSlide(imageArray));
-                    // $("#tab0-content").append(makeCommonInfoTable());
                 }
             );
 
             // 상세 정보 요청
             ajaxRequest(
-                detailContentUrl,
+                commonInfoUrl,
                 {
                     MobileOS: "ETC",
                     MobileApp: "AppTest",
@@ -61,43 +63,41 @@ function setDetailPage(contentId, tab) {
                     _type: "json",
                     contentId: contentId,
                     defaultYN: "Y",
-                    firstImageYN: "Y",
+                    addrinfoYN: "Y",
+                    mapinfoYN: "Y",
+                    overviewYN: "Y",
                 },
                 function (data) {
-                    // console.log(data);
-                    // console.log(makeCarouselSlide([]));
-                    // $("#tab0-content").append(makeCommonInfoTable());
+                    let item = data.response.body.items.item[0];
+                    console.log(item);
+                    $("#infoArea").html(makeCommonInfoTable(item));
+                    makeMap(item.mapy, item.mapx);
                 }
             );
         } else {
         }
-    } else if (tab == 1) {
-        if ($("#tab1-content").html() == "") {
+    } else {
+        if (!loadedTabs[tab]) {
             ajaxRequest(
-                detailContentUrl,
+                detailInfoUrl,
                 {
                     MobileOS: "ETC",
                     MobileApp: "AppTest",
                     serviceKey: apiKey,
                     _type: "json",
                     contentId: contentId,
-                    defaultYN: "Y",
-                    firstImageYN: "Y",
+                    contentTypeId: 12,
                 },
                 function (data) {
-                    let output2 = `<div class="row py-4">
-                        <div class="col">345</div>
-                        <div class="col">678</div>
-                    </div>`;
                     let item = data.response.body.items.item[0];
-                    // console.log(item.firstimage);
-                    $("#tab1-content").html(output2);
+                    $("#detailInfoArea").html(makeDetailInfoTable(item));
                 }
             );
+        } else {
         }
-    } else {
-        console.log("tab2 데이터 호출");
     }
+
+    loadedTabs[tab] = true;
 }
 
 function makeCarouselSlide(images) {
@@ -162,34 +162,100 @@ function makeCarouselSlide(images) {
     return carousel;
 }
 
-function makeCommonInfoTable() {
+function makeCommonInfoTable(item) {
     let table = `
-    
-<div id="infoArea" class="">
-                            <table class="">
-                                <tr class="">
-                                    <th class="py-2">우편번호</th>
-                                    <td class="">
-                                        전라남도 진도군 고군면 신비의바닷길 47
-                                        (고군면)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="py-2">주소</th>
-                                    <td>
-                                        전라남도 진도군 고군면 신비의바닷길 47
-                                        (고군면)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="py-2">홈페이지</th>
-                                    <td>
-                                        전라남도 진도군 고군면 신비의바닷길 47
-                                        (고군면)
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>`;
+        <div id="infoArea" class="">
+            <table class="">
+                <tr class="">
+                    <th class="py-2">우편번호</th>
+                    <td class="">
+                        ${item.zipcode}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="py-2">주소</th>
+                    <td>
+                        ${item.addr1} ${item.addr2}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="py-2">홈페이지</th>
+                    <td>
+                        ${item.homepage}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="py-2">개요</th>
+                    <td>
+                        ${item.overview}
+                    </td>
+                <tr>
+            </table>
+        </div>`;
 
+    return table;
+}
+
+// 카카오 지도
+function makeMap(lat, lon) {
+    var mapContainer = $("#mapArea")[0],
+        mapOption = {
+            center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
+            level: 3, // 지도의 확대 레벨
+        };
+
+    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    // 마커가 표시될 위치입니다
+    var markerPosition = new kakao.maps.LatLng(lat, lon);
+
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        position: markerPosition,
+    });
+
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+}
+
+// 소개 정보
+function makeDetailInfoTable(item) {
+    let table = `
+        <div id="infoArea" class="">
+            <table class="">
+                <tr class="">
+                    <th class="py-2">문의 및 안내</th>
+                    <td class="">
+                        ${item.infocenter}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="py-2">쉬는 날</th>
+                    <td>
+                        ${item.restdate}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="py-2">이용 시간</th>
+                    <td>
+                        ${item.usetime}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="py-2">주차 시설</th>
+                    <td>
+                        ${item.parking}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="py-2">애완동물 동반 가능 여부</th>
+                    <td>
+                        ${item.chkpet}
+                    </td>
+                </tr>
+
+            </table>
+        </div>`;
     return table;
 }
