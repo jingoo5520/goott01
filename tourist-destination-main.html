@@ -41,20 +41,19 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/my_css.css" />
 
         <!-- jQuery -->
         <script src="js/jquery-3.7.1.js"></script>
-    </head>
-    <body>
-        <!-- Spinner Start -->
-        <div
-            id="spinner"
-            class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
-        >
-            <div class="spinner-grow text-primary" role="status"></div>
-        </div>
-        <!-- Spinner End -->
 
+        <!-- fontAwesome -->
+        <script
+            src="https://kit.fontawesome.com/02b6277f46.js"
+            crossorigin="anonymous"
+        ></script>
+    </head>
+    <style></style>
+    <body>
         <!-- Navbar start -->
         <div class="navbarArea"></div>
         <!-- Navbar End -->
@@ -101,6 +100,18 @@
         <div class="container-fluid blog py-5">
             <div class="container py-5">
                 <div id="listTab" class="row g-4"></div>
+                <!-- Spinner Start -->
+                <div
+                    id="spinner"
+                    class="w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
+                >
+                    <div class="spinner-grow text-primary" role="status"></div>
+                </div>
+                <!-- Spinner End -->
+
+                <button id="moreItemsButton" class="mt-4 searched">
+                    더보기
+                </button>
             </div>
         </div>
 
@@ -129,7 +140,8 @@
         <script src="lib/lightbox/js/lightbox.min.js"></script>
 
         <!-- Template Javascript -->
-        <script src="js/common.js"></script>
         <script src="js/main.js"></script>
+        <script src="js/common.js"></script>
+        <script src="js/tourist-destination.js"></script>
     </body>
 </html>

@@ -25,6 +25,7 @@ $(function () {
 function setDetailPage(contentId, tab) {
     if (tab == 0) {
         if (!loadedTabs[tab]) {
+            $("#spinner").addClass("show");
             ajaxRequest(
                 moreImagesUrl,
                 {
@@ -70,14 +71,21 @@ function setDetailPage(contentId, tab) {
                 function (data) {
                     let item = data.response.body.items.item[0];
                     console.log(item);
+
+                    $(".breadcrumb").append(
+                        `<li class="breadcrumb-item"><a href="#">${item.title}</a></li>`
+                    );
+
                     $("#infoArea").html(makeCommonInfoTable(item));
                     makeMap(item.mapy, item.mapx);
+                    $("#spinner").removeClass("show");
                 }
             );
         } else {
         }
     } else {
         if (!loadedTabs[tab]) {
+            $("#spinner").addClass("show");
             ajaxRequest(
                 detailInfoUrl,
                 {
@@ -91,6 +99,7 @@ function setDetailPage(contentId, tab) {
                 function (data) {
                     let item = data.response.body.items.item[0];
                     $("#detailInfoArea").html(makeDetailInfoTable(item));
+                    $("#spinner").removeClass("show");
                 }
             );
         } else {

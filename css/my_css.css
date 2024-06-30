@@ -1,0 +1,37 @@
+.primary-color {
+    color: skyblue;
+}
+
+.list-item {
+    height: 300px;
+}
+
+.list-img {
+    position: relative;
+    width: 100%;
+    height: 60%;
+    overflow: hidden;
+}
+
+.list-img img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.item-img:hover {
+    opacity: 0.6;
+    transform: scale(1.3);
+    transition: 0.5s;
+}
+
+.item-title {
+    height: 40%;
+}
+
+.favoriteButton {
+    color: red;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}

@@ -83,6 +83,7 @@ https://themewagon.github.io/environs/index.html
 김민성: 쇼핑
 김준범: 음식점
 
+영어이름
 Junho Jang (장준호)
 Jingu Kang (강진구)
 Junbeom Kim (김준범)
@@ -92,11 +93,8 @@ Jeongheon Seok (석정헌)
 Yongho Shin (신용호)
 Heesung Yoon (윤희성)
 
-찜기능
-맵, 마커, 카카오 공유하기 등등 사용해보기
-pagination or 다음 페이지로 사용해보기, 스크롤 내릴 때 마다 데이터 더 보여주기
+프로젝트 체크 요소
 
-프로젝트 만들기
 1. index.html 에서 각자의 페이지로 이동할 수 있도록 만들기
 2. 각자 list page, detail page를 모두 구성
 3. 찜 기능 구현(쿠키 이용)
@@ -108,7 +106,7 @@ pagination or 다음 페이지로 사용해보기, 스크롤 내릴 때 마다 �
 9. (option)데이터 정렬
 10. (option)지역 - 시군구 나누기
 
-index.html 은 테마, 멘트정도 바꾸고 
+index.html 은 테마, 멘트정도 바꾸기 
 
 파일 이름 통일
 찜기능(쿠키) 통일
@@ -116,35 +114,6 @@ index.html 은 테마, 멘트정도 바꾸고
 카테고리이름-sub.html
 
 ~5일 까지
-
-detailPage.html
-탭1
-대표 이미지,  우편번호, 홈페이지, 주소, 개요, 좌표, 지도
-
-탭2
-소개정보
- <contentid>126905</contentid>
-    <contenttypeid>12</contenttypeid>
-    <heritage1>0</heritage1>
-    <heritage2>0</heritage2>
-    <heritage3>0</heritage3>
-    <infocenter>033-435-6035</infocenter>
-    <opendate>1998년 7월 14일</opendate>
-    <restdate>연중무휴</restdate>
-    <expguide></expguide>
-    <expagerange></expagerange>
-    <accomcount>산림휴양(등산) 1,500명 / 숙박 110명</accomcount>
-    <useseason></useseason>
-    <usetime></usetime>
-    <parking>있음</parking>
-    <chkbabycarriage>없음</chkbabycarriage>
-    <chkpet>불가</chkpet>
-    <chkcreditcard>없음</chkcreditcard>
-
-
-탭3
-추가이미지
-
 
 2024-06-25
 
@@ -165,6 +134,8 @@ Goott Academy
 5) navbar 디자인 
 
 6) 쿠키 폼?
+쿠키는 name에 contentId 주고 value에 개인꺼 상세페이지 주소
+cookie = `${contentId}=detail.html?contentid=${contentId}`;
 
 7) footer 내용
 We are
@@ -173,5 +144,6 @@ We are
 Project
 -프로젝트 명
 -프로젝트 기간
+
 
  
