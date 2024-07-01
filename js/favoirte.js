@@ -15,34 +15,23 @@ $(function () {
 
 // 쿠키 가져와서 데이터 뿌리기
 function drawList() {
-    // let isExistCookie = false;
-    // 모든 쿠키 가져오기
-    let cookArr = document.cookie.split(";");
-    console.log(cookArr);
+    let cookValJson = getFavCookie();
+    console.log(cookValJson);
 
-    let cookValJson;
+    // 찜 아이템 없는 경우
+    if (cookValJson == null) {
+        $("#favoriteListTab").html("찜 항목이 없습니다.");
+    } else {
+        for (let item in cookValJson) {
+            let title = cookValJson[item].title;
+            let img = cookValJson[item].postimage;
+            let link = cookValJson[item].link;
+            console.log(cookValJson[item].title);
 
-    // 쿠키검색, 가져오기
-    for (let i = 0; i < cookArr.length; i++) {
-        let cookie = cookArr[i].trim();
-        let cookName = cookie.split("=")[0];
-        let cookValue = cookie.substring(cookie.indexOf("=") + 1);
-
-        if (cookName == "favorite_post") {
-            isExistCookie = true;
-            cookValJson = JSON.parse(cookValue);
-            console.log(cookValJson);
-            break;
+            $("#favoriteListTab").append(
+                makeFavoriteListItem(title, img, link)
+            );
         }
-    }
-
-    for (let item in cookValJson) {
-        let title = cookValJson[item].title;
-        let img = cookValJson[item].postimage;
-        let link = cookValJson[item].link;
-        console.log(cookValJson[item].title);
-
-        $("#favoriteListTab").append(makeFavoriteListItem(title, img, link));
     }
 }
 

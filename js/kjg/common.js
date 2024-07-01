@@ -42,6 +42,66 @@ function ajaxRequest(baseUrl, params, successCallback) {
     });
 }
 
+// favorite_post 쿠키 가져오기
+function getFavCookie() {
+    let cookArr = document.cookie.split(";");
+
+    for (let i = 0; i < cookArr.length; i++) {
+        let cookie = cookArr[i].trim();
+        let cookName = cookie.split("=")[0];
+        let cookValue = cookie.substring(cookie.indexOf("=") + 1);
+
+        if (cookName == "favorite_post") {
+            cookValJson = JSON.parse(cookValue);
+            return cookValJson;
+        }
+    }
+
+    return null;
+}
+
+// 찜 아이템 추가
+function addFavItem(cookValJson, contentId, title, img) {
+    let cookie;
+    // 아이템이 없는 경우
+
+    if (cookValJson == null) {
+        cookie = {
+            [contentId]: {
+                postimage: img,
+                title: title,
+                link: `tourist-destination-detail.html?contentid=${contentId}`,
+            },
+        };
+
+        let cookieStr = JSON.stringify(cookie);
+
+        document.cookie = `favorite_post=${cookieStr}`;
+    } else {
+        cookValJson[contentId] = {
+            postimage: img,
+            title: title,
+            link: `tourist-destination-detail.html?contentid=${contentId}`,
+        };
+
+        let cookieStr = JSON.stringify(cookValJson);
+
+        document.cookie = `favorite_post=${cookieStr}`;
+    }
+}
+
+// 찜 아이템 삭제
+function delFavItem(cookValJson, contentId) {
+    if (contentId in cookValJson) {
+        delete cookValJson[contentId];
+
+        let cookieStr = JSON.stringify(cookValJson);
+
+        document.cookie = `favorite_post=${cookieStr}
+        )}`;
+    }
+}
+
 function getFooter() {
     let footer = `<div class="container-fluid footer bg-dark text-body py-5">
             <div class="container py-5">

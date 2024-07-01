@@ -99,96 +99,11 @@ $(function () {
         let img = element.attr("data-img");
         let contentId = element.attr("data-contentId");
 
-        console.log(title, img, contentId);
-
+        let cookValJson = getFavCookie();
         if (e.target.classList.contains("checked")) {
-            let cookArr = document.cookie.split(";");
-            console.log(cookArr);
-            for (let i = 0; i < cookArr.length; i++) {
-                let cookie = cookArr[i].trim();
-                let cookName = cookie.split("=")[0];
-                let index = cookie.indexOf("=");
-                let cookValue = cookie.substring(index + 1);
-
-                // console.log(cookValue);
-                cookValJson = JSON.parse(cookValue);
-                console.log(cookValJson);
-            }
-
-            // 여기서부터 수정
-            // 쿠키 제거
-            if (contentId in cookValJson) {
-                console.log(`${contentId} 제거`);
-                delete cookValJson[contentId];
-
-                console.log(JSON.stringify(cookValJson));
-
-                document.cookie = `favorite_post=${JSON.stringify(
-                    cookValJson
-                )}`;
-            }
+            delFavItem(cookValJson, contentId);
         } else {
-            let isExistCookie = false;
-            // 쿠키 추가
-
-            // 기존 쿠키 데이터 가져오기
-            let cookArr = document.cookie.split(";");
-
-            let cookValueStr;
-            let cookValJson;
-
-            for (let i = 0; i < cookArr.length; i++) {
-                let cookie = cookArr[i].trim();
-                let cookName = cookie.split("=")[0];
-                let index = cookie.indexOf("=");
-
-                let cookValue = cookie.substring(index + 1);
-
-                if (cookName == "favorite_post") {
-                    isExistCookie = true;
-                    cookValueStr = cookValue;
-                    console.log(cookValueStr);
-
-                    cookValJson = JSON.parse(cookValueStr);
-                    // console.log(cookValJson);
-                }
-                if (cookArr[i].split("=")[0].trim() == "favorite_post") {
-                    console.log(
-                        cookArr[i]
-                            .split("=")[0]
-                            .trim()
-                            .substring(("favorite_post" + "=").length)
-                    );
-                }
-                console.log(cookArr[i].split("=")[0].trim());
-            }
-
-            // 쿠키가 이미 있다면
-            if (isExistCookie) {
-                console.log("쿠키있음");
-                cookValJson[contentId] = {
-                    postimage: img,
-                    title: title,
-                    link: `tourist-destination-detail.html?contentid=${contentId}`,
-                };
-
-                // console.log(`favorite_post=${JSON.stringify(cookValJson)}`);
-                document.cookie = `favorite_post=${JSON.stringify(
-                    cookValJson
-                )}`;
-            } else {
-                // 쿠키없음
-                console.log("쿠키음슴");
-                let temp = {
-                    postimage: img,
-                    title: title,
-                    link: `tourist-destination-detail.html?contentid=${contentId}`,
-                };
-
-                document.cookie = `favorite_post = {"${contentId}": ${JSON.stringify(
-                    temp
-                )}}`;
-            }
+            addFavItem(cookValJson, contentId, title, img);
         }
 
         e.target.classList.toggle("fa-solid");
@@ -228,36 +143,14 @@ function makeListItem(title, img, contentId, isFavorite) {
 
 // 리스트 그리기
 function drawList(list) {
-    let isExistCookie = false;
-    // 모든 쿠키 가져오기
-
-    // 기존 쿠키 데이터 가져오기
-    let cookArr = document.cookie.split(";");
-    let cookValJson;
-
-    let cookJsonArr;
-
-    for (let i = 0; i < cookArr.length; i++) {
-        let cookie = cookArr[i].trim();
-        let cookName = cookie.split("=")[0];
-        let cookValue = cookie.substring(cookie.indexOf("=") + 1);
-        console.log(cookValue);
-
-        // console.log(cookValue);
-
-        if (cookName == "favorite_post") {
-            isExistCookie = true;
-
-            cookValJson = JSON.parse(cookValue);
-            console.log(cookValJson);
-        }
-    }
-
+    let cookValJson = getFavCookie();
     let cookieNames = [];
-    //쿠키가 있다면
-    if (isExistCookie) {
+
+    if (cookValJson == null) {
+    } else {
         console.log("쿠키있음");
         cookieNames = Object.keys(cookValJson);
+        console.log(cookieNames);
     }
 
     for (let i = 0; i < list.item.length; i++) {
@@ -270,7 +163,6 @@ function drawList(list) {
 
         let isFavorite = cookieNames.includes(contentId);
 
-        //[1] == contentId ? true : false;
         $("#listTab").append(makeListItem(title, img, contentId, isFavorite));
     }
 }
