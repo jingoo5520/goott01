@@ -43,7 +43,7 @@ function setDetailPage(contentId, tab) {
 
                     // 이미지가 없는 경우
                     if (data.response.body.totalCount == 0) {
-                        imageArray[0] = "img/noimg.png";
+                        imageArray[0] = "img/kjg/noimg.png";
                     } else {
                         for (let i = 0; i < images.length; i++) {
                             imageArray.push(images[i].originimgurl);
@@ -70,7 +70,6 @@ function setDetailPage(contentId, tab) {
                 },
                 function (data) {
                     let item = data.response.body.items.item[0];
-                    console.log(item);
 
                     $(".breadcrumb").append(
                         `<li class="breadcrumb-item"><a href="#">${item.title}</a></li>`

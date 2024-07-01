@@ -277,7 +277,7 @@ function getNavbar() {
                             style="margin-left: 15px"
                         >
                             <a
-                                href=""
+                                href="favorite.html"
                                 class="btn-hover-bg btn btn-primary text-white py-2 px-4 me-3"
                                 >favorite</a
                             >

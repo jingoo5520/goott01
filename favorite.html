@@ -62,30 +62,6 @@
         <div class="headerArea"></div>
         <!-- Header End -->
 
-        <!-- SearchPanel Start -->
-        <div class="container">
-            <div id="searchPanel">
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#myModal"
-                >
-                    지역 선택
-                </button>
-            </div>
-
-            <div class="input-group mb-3">
-                <input
-                    id="searchBar"
-                    type="text"
-                    class="form-control"
-                    placeholder="Search"
-                />
-                <button class="btn btn-success" type="submit">Enter</button>
-            </div>
-        </div>
-
         <!-- The Modal -->
         <div class="modal" id="myModal">
             <div class="modal-dialog">
@@ -99,7 +75,7 @@
 
         <div class="container-fluid blog py-5">
             <div class="container py-5">
-                <div id="listTab" class="row g-4"></div>
+                <div id="favoriteListTab" class="row g-4"></div>
                 <!-- Spinner Start -->
                 <div
                     id="spinner"
@@ -109,7 +85,7 @@
                 </div>
                 <!-- Spinner End -->
 
-                <button id="moreItemsButton" class="mt-4">더보기</button>
+                <!-- <button id="moreItemsButton" class="mt-4">더보기</button> -->
             </div>
         </div>
 
@@ -140,6 +116,6 @@
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
         <script src="js/kjg/common.js"></script>
-        <script src="js/kjg/tourist-destination.js"></script>
+        <script src="js/favoirte.js"></script>
     </body>
 </html>

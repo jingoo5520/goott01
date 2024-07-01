@@ -117,33 +117,49 @@ index.html 은 테마, 멘트정도 바꾸기
 
 2024-06-25
 
-1) index.html 가운데 멘트?
-Goott Academy
-1st mini Project - Group 1
-2024. ~ 2024. 07. 05
-개요
+2024-07-01
+0) 구조
+index.html
+카테고리명-main
+카테고리명-sub
 
-2) 각 카테고리 메인, 디테일 파일명 통일
--각 카테고리 영문 명
--각 카테고리 이미지
+img
+-category
+-index.html 배경1, 2, 3, ..
+-개인1
+-개인2
+...
 
-3) primary color, footer bg color, text-color
+js
+-main.js
+-개인1
+-개인2
+...
 
-4) index.html 대표이미지 3장~
+css
+-style.css
+-bootstrap.min
+-개인1
+-개인2
+...
 
-5) navbar 디자인 
+카테고리 명
+관광지: tourist-destination-main.html
+문화시설: cultural-facilities-sub.html
+축제: festival
+여행코스: travel-course
+레포츠: leisure-sports
+숙박: lodgment
+쇼핑: shopping
+음식점: restaurant
 
-6) 쿠키 폼?
+
+1) index.html 가운데 멘트
+
+2) primary color, footer bg color, text-color
+
+4) index.html 배경 3장~
+
+5) 쿠키 폼?
 쿠키는 name에 contentId 주고 value에 개인꺼 상세페이지 주소
 cookie = `${contentId}=detail.html?contentid=${contentId}`;
-
-7) footer 내용
-We are
--1조원 이름들 - 카테고리
-
-Project
--프로젝트 명
--프로젝트 기간
-
-
- 

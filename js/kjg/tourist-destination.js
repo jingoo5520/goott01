@@ -88,22 +88,81 @@ $(function () {
     });
 
     $("#listTab").on("click", ".favoriteButton i", function (e) {
-        let cookie;
-        let contentId = $(e.target)
-            .parent()
-            .parent()
-            .parent()
-            .attr("data-contentId");
+        let element = $(e.target).parent().parent().parent();
+        let title = element.attr("data-title");
+        let img = element.attr("data-img");
+        let contentId = element.attr("data-contentId");
+
+        console.log(title, img, contentId);
 
         if (e.target.classList.contains("checked")) {
             // 쿠키 제거
-            let now = new Date();
-            cookie = `${contentId}=tourist-destination-detail.html?contentid=${contentId};expires=${now.toUTCString()}`;
-            document.cookie = cookie;
+            // let now = new Date();
+            // cookie = `${contentId}=tourist-destination-detail.html?contentid=${contentId};expires=${now.toUTCString()}`;
+            // document.cookie = cookie;
         } else {
+            let isExistCookie = false;
             // 쿠키 추가
-            cookie = `${contentId}=tourist-destination-detail.html?contentid=${contentId}`;
-            document.cookie = cookie;
+
+            // 기존 쿠키 데이터 가져오기
+            let cookArr = document.cookie.split(";");
+
+            let cookValueStr;
+            let cookValJson;
+
+            let cookJsonArr;
+
+            for (let i = 0; i < cookArr.length; i++) {
+                let cookie = cookArr[i].trim();
+                let cookName = cookie.split("=")[0];
+                let cookValue =
+                    cookie.split("=")[1] + "=" + cookie.split("=")[2];
+
+                if (cookName == "favorite_post") {
+                    isExistCookie = true;
+                    cookValueStr = cookValue;
+                    // console.log(cookValueStr);
+
+                    cookValJson = JSON.parse(cookValueStr);
+                    // console.log(cookValJson);
+                }
+                if (cookArr[i].split("=")[0].trim() == "favorite_post") {
+                    console.log(
+                        cookArr[i]
+                            .split("=")[0]
+                            .trim()
+                            .substring(("favorite_post" + "=").length)
+                    );
+                }
+                console.log(cookArr[i].split("=")[0].trim());
+            }
+
+            // 쿠키가 이미 있다면
+            if (isExistCookie) {
+                console.log("쿠키있음");
+                cookValJson[contentId] = {
+                    postimage: img,
+                    title: title,
+                    link: `tourist-destination-detail.html?contentid=${contentId}`,
+                };
+
+                // console.log(`favorite_post=${JSON.stringify(cookValJson)}`);
+                document.cookie = `favorite_post=${JSON.stringify(
+                    cookValJson
+                )}`;
+            } else {
+                // 쿠키없음
+                console.log("쿠키음슴");
+                let temp = {
+                    postimage: img,
+                    title: title,
+                    link: `tourist-destination-detail.html?contentid=${contentId}`,
+                };
+
+                document.cookie = `favorite_post = {"${contentId}": ${JSON.stringify(
+                    temp
+                )}}`;
+            }
         }
 
         e.target.classList.toggle("fa-solid");
@@ -115,7 +174,7 @@ $(function () {
 function makeListItem(title, img, contentId, isFavorite) {
     let item = `
         <div class="col-lg-6 col-xl-3">
-            <div class="list-item" data-contentId="${contentId}">
+            <div class="list-item" data-contentId="${contentId}" data-img=${img} data-title=${title} >
                 <div class="list-img">
                     <img
                         src="${img}"
@@ -143,23 +202,69 @@ function makeListItem(title, img, contentId, isFavorite) {
 
 // 리스트 그리기
 function drawList(list) {
+    let isExistCookie = false;
     // 모든 쿠키 가져오기
-    let cookies = document.cookie;
-    let cookArr = cookies.split("; ");
 
-    let cookieNames = cookArr.map((cookie) => {
-        return cookie.split("=")[0].trim();
-    });
+    // 기존 쿠키 데이터 가져오기
+    let cookArr = document.cookie.split(";");
+    let cookValJson;
 
-    console.log(cookieNames);
+    let cookJsonArr;
+
+    for (let i = 0; i < cookArr.length; i++) {
+        let cookie = cookArr[i].trim();
+        let cookName = cookie.split("=")[0];
+        let cookValue = cookie.substring(cookie.indexOf("=") + 1);
+        console.log(cookValue);
+
+        // console.log(cookValue);
+
+        if (cookName == "favorite_post") {
+            isExistCookie = true;
+
+            cookValJson = JSON.parse(cookValue);
+            console.log(cookValJson);
+        }
+
+        // if (cookArr[i].split("=")[0].trim() == "favorite_post") {
+        // }
+        // console.log(cookArr[i].split("=")[0].trim());
+    }
+
+    let cookieNames = [];
+    //쿠키가 있다면
+    if (isExistCookie) {
+        console.log("쿠키있음");
+        cookieNames = Object.keys(cookValJson);
+        // cookValJson[contentId] = {
+        //     postimage: img,
+        //     title: title,
+        //     link: `tourist-destination-detail.html?contentid=${contentId}`,
+        // };
+        // console.log(`favorite_post=${JSON.stringify(cookValJson)}`);
+        // document.cookie = `favorite_post=${JSON.stringify(cookValJson)}`;
+    } else {
+        // 쿠키가 없다면
+    }
+
+    // let cookies = document.cookie;
+
+    // let cookArr = cookies.split(";");
+
+    // let cookieNames = cookArr.map((cookie) => {
+    //     return cookie.split("=")[0].trim();
+    // });
+
+    // console.log(cookieNames);
 
     for (let i = 0; i < list.item.length; i++) {
         let title = list.item[i].title;
         let img =
             list.item[i].firstimage != ""
                 ? list.item[i].firstimage
-                : "img/noimg.png";
+                : "img/kjg/noimg.png";
         let contentId = list.item[i].contentid;
+
         let isFavorite = cookieNames.includes(contentId);
         console.log(isFavorite);
 
