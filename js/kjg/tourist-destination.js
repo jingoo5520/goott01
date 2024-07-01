@@ -105,11 +105,13 @@ $(function () {
         let cookValue = cookie.substring(index + 1);
 
         console.log(cookValue);
-        // 여기서부터 수정
-        // cookValJson = JSON.parse(cookValue);
-        // console.log(cookValJson);
+        cookValJson = JSON.parse(cookValue);
+        console.log(cookValJson);
       }
+
+      // 여기서부터 수정
       // 쿠키 제거
+
       // let now = new Date();
       // cookie = `${contentId}=tourist-destination-detail.html?contentid=${contentId};expires=${now.toUTCString()}`;
       // document.cookie = cookie;
