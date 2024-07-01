@@ -18,12 +18,7 @@ const detailInfoUrl =
 
 const kakaoKey = "7f8e1dea7a4541ed9a2fdba8613d1306";
 
-(function ($) {
-    $(".navbarArea").html(getNavbar());
-    $(".headerArea").html(getHeader());
-    $(".footerArea").html(getFooter());
-    $(".copyrightArea").html(getCopyright());
-})(jQuery);
+(function ($) {})(jQuery);
 
 // ---------------------------------------------------------------------------------------
 
@@ -290,10 +285,10 @@ function getNavbar() {
     return navbar;
 }
 
-function getHeader() {
+function getHeader(title) {
     let header = `<div class="container-fluid bg-breadcrumb">
             <div class="container text-center py-5" style="max-width: 900px">
-                <h3 class="text-white display-3 mb-4">About Us</h3>
+                <h3 class="text-white display-3 mb-4">${title}</h3>
                 <p class="fs-5 text-white mb-4">
                     Help today because tomorrow you may be the one who needs
                     more helping!

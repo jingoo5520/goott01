@@ -6,6 +6,11 @@ $(function () {
 
     let contentId = url.split("contentid=")[1];
 
+    $(".navbarArea").html(getNavbar());
+    $(".headerArea").html(getHeader("Info"));
+    $(".footerArea").html(getFooter());
+    $(".copyrightArea").html(getCopyright());
+
     setDetailPage(contentId, 0);
 
     $("a[data-bs-toggle='pill']").on("show.bs.tab", function (e) {
