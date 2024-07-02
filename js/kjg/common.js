@@ -16,6 +16,8 @@ const moreImagesUrl =
 const detailInfoUrl =
     "http://apis.data.go.kr/B551011/KorService1/detailIntro1?";
 
+const areaCodeUrl = "http://apis.data.go.kr/B551011/KorService1/areaCode1?";
+
 const kakaoKey = "7f8e1dea7a4541ed9a2fdba8613d1306";
 
 (function ($) {})(jQuery);
@@ -48,6 +50,7 @@ function getFavCookie() {
 
     for (let i = 0; i < cookArr.length; i++) {
         let cookie = cookArr[i].trim();
+
         let cookName = cookie.split("=")[0];
         let cookValue = cookie.substring(cookie.indexOf("=") + 1);
 
@@ -95,10 +98,10 @@ function delFavItem(cookValJson, contentId) {
     if (contentId in cookValJson) {
         delete cookValJson[contentId];
 
+        console.log(cookValJson);
         let cookieStr = JSON.stringify(cookValJson);
 
-        document.cookie = `favorite_post=${cookieStr}
-        )}`;
+        document.cookie = `favorite_post=${cookieStr}`;
     }
 }
 
@@ -293,34 +296,34 @@ function getNavbar() {
                                     <a href="tourist-destination-main.html" class="dropdown-item"
                                         >tourist-destination</a
                                     >
-                                    <a href="cultural-facilities.html" class="dropdown-item"
+                                    <a href="cultural-facilities-main.html" class="dropdown-item"
                                         >cultural-facilities</a
                                     >
-                                    <a href="festival.html" class="dropdown-item"
+                                    <a href="festival-main.html" class="dropdown-item"
                                         >festival</a
                                     >
                                     <a
-                                        href="travel-course.html"
+                                        href="travel-course-main.html"
                                         class="dropdown-item"
                                         >travel-course</a
                                     >
                                     <a
-                                        href="leisure-sports.html"
+                                        href="leisure-sports-main.html"
                                         class="dropdown-item"
                                         >leisure-sports</a
                                     >
                                     <a
-                                        href="lodgment.html"
+                                        href="lodgment-main.html"
                                         class="dropdown-item"
                                         >lodgment</a
                                     >
                                     <a
-                                        href="shopping.html"
+                                        href="shopping-main.html"
                                         class="dropdown-item"
                                         >shopping</a
                                     >
                                     <a
-                                        href="restaurant.html"
+                                        href="restaurant-main.html"
                                         class="dropdown-item"
                                         >restaurant</a
                                     >
@@ -345,22 +348,29 @@ function getNavbar() {
     return navbar;
 }
 
-function getHeader(title) {
-    let header = `<div class="container-fluid bg-breadcrumb">
-            <div class="container text-center py-5" style="max-width: 900px">
-                <h3 class="text-white display-3 mb-4">${title}</h3>
-                <p class="fs-5 text-white mb-4">
+function getHeader(title, links) {
+    let header = `
+    <div class="container-fluid bg-breadcrumb bg-dark">
+        <div class="container text-center py-5" style="max-width: 900px">
+            <h3 class="text-white display-3 mb-4">${title}</h3>
+            <p class="fs-5 mb-4 header-subtitle">
                     Help today because tomorrow you may be the one who needs
                     more helping!
-                </p>
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li id="home" class="breadcrumb-item">
-                        <a href="index.html">Home</a>
-                    </li>
-                    <li id="tourist-destination" class="breadcrumb-item"><a href="tourist-destination-main.html">tourist-destination</a></li>
-                </ol>
+            </p>
+            <ol class="breadcrumb justify-content-center mb-0">`;
+
+    for (link in links) {
+        let key = link;
+        let value = links[link];
+
+        header += `<li class="breadcrumb-item">
+                        <a href="${value}">${key}</a>
+                    </li>`;
+    }
+
+    header += `</ol>
             </div>
-        </div>`;
+    </div>`;
 
     return header;
 }

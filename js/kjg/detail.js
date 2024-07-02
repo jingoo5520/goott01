@@ -7,7 +7,12 @@ $(function () {
     let contentId = url.split("contentid=")[1];
 
     $(".navbarArea").html(getNavbar());
-    $(".headerArea").html(getHeader("Info"));
+    $(".headerArea").html(
+        getHeader("Info", {
+            home: "index.html",
+            "tourist-destination": "tourist-destination-main.html",
+        })
+    );
     $(".footerArea").html(getFooter());
     $(".copyrightArea").html(getCopyright());
 

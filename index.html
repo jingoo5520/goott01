@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Environs - Environmental & Nature Website Template</title>
+        <title>Goott01</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content="" name="keywords" />
         <meta content="" name="description" />
@@ -39,32 +39,34 @@
         <link href="css/style.css" rel="stylesheet" />
 
         <script>
-            let categoryImgArr = [
-                "tourist-destination.png",
-                "cultural-facilities.png",
-                "festival.png",
-                "travel-course.png",
-                "leisure-sports.png",
-                "lodgment.png",
-                "shopping.png",
-                "restaurant.png",
+            let categoryArr = [
+                "tourist-destination",
+                "cultural-facilities",
+                "festival",
+                "travel-course",
+                "leisure-sports",
+                "lodgment",
+                "shopping",
+                "restaurant",
             ];
 
             let category = "";
-            for (let i = 0; i < categoryImgArr.length; i++) {
+            for (let i = 0; i < categoryArr.length; i++) {
                 category += `
-            <div class="col-lg-2 col-xl-3">
-                        <div class="volunteer-img">
-                            <img
-                                src="img/category/${categoryImgArr[i]}"
-                                class="img-fluid w-100"
-                                alt="Image"
-                            />
-                            <div class="volunteer-title">
-                                <h5 class="mb-2 text-white">Michel Brown</h5>
-                                <p class="mb-0 text-white">Communicator</p>
-                            </div>
-                        </div>
+            <div class="col-lg-2 col-xl-3 p-5">
+                            <a href="${categoryArr[i]}-main.html">
+                                <div class="volunteer-img">
+                                    <img
+                                        src="img/category/${categoryArr[i]}.png"
+                                        class="img-fluid w-100"
+                                        alt="Image"
+                                    />
+                                </div>
+                                <div class="volunteer-title">
+                                        <h5 class="mb-2 mt-2 text-primary text-center">${categoryArr[i]}</h5>
+                                    </div>
+                                
+                            </a>
                     </div>`;
             }
 
@@ -73,15 +75,17 @@
             };
         </script>
     </head>
-    <style>
-        .volunteer-img {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-    </style>
 
     <body>
+        <!-- Spinner Start -->
+        <div
+            id="spinner"
+            class="w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
+        >
+            <div class="spinner-grow text-primary" role="status"></div>
+        </div>
+        <!-- Spinner End -->
+
         <!-- Navbar start -->
         <div class="navbarArea">
             <div class="container-fluid fixed-top px-0">
@@ -161,37 +165,37 @@
                                             >tourist-destination</a
                                         >
                                         <a
-                                            href="cultural-facilities.html"
+                                            href="cultural-facilities-main.html"
                                             class="dropdown-item"
                                             >cultural-facilities</a
                                         >
                                         <a
-                                            href="festival.html"
+                                            href="festival-main.html"
                                             class="dropdown-item"
                                             >festival</a
                                         >
                                         <a
-                                            href="travel-course.html"
+                                            href="travel-course-main.html"
                                             class="dropdown-item"
                                             >travel-course</a
                                         >
                                         <a
-                                            href="leisure-sports.html"
+                                            href="leisure-sports-main.html"
                                             class="dropdown-item"
                                             >leisure-sports</a
                                         >
                                         <a
-                                            href="lodgment.html"
+                                            href="lodgment-main.html"
                                             class="dropdown-item"
                                             >lodgment</a
                                         >
                                         <a
-                                            href="shopping.html"
+                                            href="shopping-main.html"
                                             class="dropdown-item"
                                             >shopping</a
                                         >
                                         <a
-                                            href="restaurant.html"
+                                            href="restaurant-main.html"
                                             class="dropdown-item"
                                             >restaurant</a
                                         >
@@ -216,7 +220,7 @@
         <!-- Navbar End -->
 
         <!-- Carousel Start -->
-        <div class="container-fluid carousel-header vh-100 px-0">
+        <div class="container-fluid carousel-header px-0">
             <div id="carouselId" class="carousel slide" data-bs-ride="carousel">
                 <ol class="carousel-indicators">
                     <li
@@ -248,7 +252,7 @@
                                     1st mini Project<br />
                                     Group 1
                                 </h1>
-                                <p class="mb-5 fs-5">2024. ? to 2024. 07. 05</p>
+                                <p class="mb-5 fs-5">to 2024. 07. 08</p>
                                 <div
                                     class="d-flex align-items-center justify-content-center"
                                 >
@@ -357,7 +361,7 @@
         <!-- Carousel End -->
 
         <!-- Volunteers Start -->
-        <div class="container-fluid volunteer py-5 mt-5">
+        <div class="container-fluid volunteer py-5">
             <div class="container py-5">
                 <div class="row g-4 categories"></div>
             </div>

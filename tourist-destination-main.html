@@ -63,21 +63,14 @@
         <!-- Header End -->
 
         <!-- SearchPanel Start -->
-        <div class="container">
-            <!-- <div id="searchPanel">
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#myModal"
-                >
-                    지역 선택
-                </button>
-            </div> -->
 
-            <div class="input-group py-4 px-4">
+        <div class="container">
+            <select id="selectArea" class="form-select mt-2"></select>
+
+            <div class="input-group mt-2">
                 <input
                     id="searchBar"
+                    class="w-50"
                     type="text"
                     class="form-control"
                     placeholder="Search"
@@ -86,30 +79,24 @@
             </div>
         </div>
 
-        <!-- The Modal -->
-        <div class="modal" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Modal body -->
-                    <div class="modal-body">Modal body..</div>
-                </div>
-            </div>
-        </div>
         <!-- SearchPanel End -->
 
-        <div class="container-fluid blog py-5">
-            <div class="container py-5">
-                <div id="listTab" class="row g-4"></div>
-                <!-- Spinner Start -->
-                <div
-                    id="spinner"
-                    class="w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
-                >
-                    <div class="spinner-grow text-primary" role="status"></div>
-                </div>
-                <!-- Spinner End -->
+        <div class="container py-3">
+            <div id="itemCount" class="mb-4"></div>
+            <div id="listTab" class="row g-4"></div>
+            <!-- Spinner Start -->
+            <div
+                id="spinner"
+                class="w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
+            >
+                <div class="spinner-grow text-primary" role="status"></div>
+            </div>
+            <!-- Spinner End -->
 
-                <button id="moreItemsButton" class="mt-4">더보기</button>
+            <div id="moreItemsButtonArea" class="mt-2">
+                <button id="moreItemsButton" class="mt-4 btn-primary w-25">
+                    더보기
+                </button>
             </div>
         </div>
 

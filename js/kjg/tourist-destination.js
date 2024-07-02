@@ -4,6 +4,9 @@ let pageNo = 1;
 let totalCnt = 0;
 let totalPage = 0;
 let searchKey;
+let areaCodes = {
+    전국: "0",
+};
 
 // 최초 페이지 이동시 리스트
 $(function () {
@@ -11,9 +14,20 @@ $(function () {
     $("#spinner").addClass("show");
 
     $(".navbarArea").html(getNavbar());
-    $(".headerArea").html(getHeader("Tourist-Destination"));
+    $(".headerArea").html(
+        getHeader("Tourist-Destination", {
+            home: "index.html",
+            "tourist-destination": "tourist-destination-main.html",
+        })
+    );
     $(".footerArea").html(getFooter());
     $(".copyrightArea").html(getCopyright());
+
+    $("#selectArea").html(`
+                <option>1</option>
+                
+                <option>3</option>
+                <option>4</option>`);
 
     ajaxRequest(
         areaBasedContentsUrl,
@@ -31,11 +45,12 @@ $(function () {
 
             totalCnt = body.totalCount;
             totalPage = Math.floor(totalCnt / numOfRows + 1);
-            console.log(totalPage);
-            drawList(body.items);
+            drawList(body.totalCount, body.items);
             $("#spinner").removeClass("show");
         }
     );
+
+    makeAreaSelector();
 
     // 더보기
     $("#moreItemsButton").on("click", function () {
@@ -64,7 +79,7 @@ $(function () {
                 function (data) {
                     let body = data.response.body;
                     console.log(body);
-                    drawList(body.items);
+                    drawList(body.totalCount, body.items);
 
                     $("#spinner").removeClass("show");
                 }
@@ -83,11 +98,10 @@ $(function () {
                     contentTypeId: 12,
                 },
                 function (data) {
-                    let itemList = data.response.body.items;
+                    let body = data.response.body;
 
-                    totalCnt = itemList.totalCount;
-                    drawList(itemList);
-                    $("#spinner").removeClass("show");
+                    totalCnt = body.totalCount;
+                    drawList(body.totalCount, body.items);
                 }
             );
         }
@@ -115,7 +129,7 @@ $(function () {
 function makeListItem(title, img, contentId, isFavorite) {
     let item = `
         <div class="col-lg-6 col-xl-3">
-            <div class="list-item" data-contentId="${contentId}" data-img=${img} data-title=${title} >
+            <div class="list-item" data-contentId="${contentId}" data-img="${img}" data-title="${title}" >
                 <div class="list-img">
                     <img
                         src="${img}"
@@ -142,17 +156,20 @@ function makeListItem(title, img, contentId, isFavorite) {
 }
 
 // 리스트 그리기
-function drawList(list) {
+function drawList(totalCount, list) {
     let cookValJson = getFavCookie();
     let cookieNames = [];
 
     if (cookValJson == null) {
     } else {
-        console.log("쿠키있음");
         cookieNames = Object.keys(cookValJson);
-        console.log(cookieNames);
     }
 
+    totalPage = Math.floor(totalCnt / numOfRows + 1);
+
+    $("#itemCount").html(
+        `<span>총 개수: ${totalCount}, 총 페이지: ${totalPage}</span>`
+    );
     for (let i = 0; i < list.item.length; i++) {
         let title = list.item[i].title;
         let img =
@@ -165,52 +182,132 @@ function drawList(list) {
 
         $("#listTab").append(makeListItem(title, img, contentId, isFavorite));
     }
+
+    $("#spinner").removeClass("show");
 }
 
 // 키워드 검색
 $("#searchBar").on("keydown", function (e) {
     pageNo = 1;
 
-    if (e.key == "Enter" && $(this).val() != "") {
-        searchKey = $(this).val();
-        $("#moreItemsButton").show();
+    if (e.key == "Enter") {
+        let code = areaCodes[$("#selectArea").val()];
+        console.log($(this).val());
 
-        $("#moreItemsButton").addClass("searched");
-        $("#spinner").addClass("show");
+        // 빈 값인 경우 지역기반 검색을 실행
+        if ($(this).val() == null || $(this).val() == "") {
+            ajaxRequest(
+                areaBasedContentsUrl,
+                {
+                    numOfRows: numOfRows,
+                    pageNo: pageNo++,
+                    MobileOS: "ETC",
+                    MobileApp: "AppTest",
+                    serviceKey: apiKey,
+                    _type: "json",
+                    contentTypeId: 12,
+                    ...(code != 0 ? { areaCode: code } : {}),
+                },
+                function (data) {
+                    if (data.response.body.totalCount != 0) {
+                        let body = data.response.body;
 
-        ajaxRequest(
-            searchedContentUrl,
-            {
-                numOfRows: numOfRows,
-                pageNo: pageNo++,
-                MobileOS: "ETC",
-                MobileApp: "AppTest",
-                serviceKey: apiKey,
-                _type: "json",
-                keyword: searchKey,
-                contentTypeId: 12,
-            },
-            function (data) {
-                if (data.response.body.totalCount != 0) {
-                    let body = data.response.body;
+                        totalCnt = body.totalCount;
+                        totalPage = Math.floor(totalCnt / numOfRows + 1);
+                        console.log(`total: ${totalPage}`);
+                        console.log(`pageNo: ${pageNo - 1}`);
+                        if (pageNo - 1 == totalPage) {
+                            $("#moreItemsButton").hide();
+                        }
 
-                    totalCnt = body.totalCount;
-                    totalPage = Math.floor(totalCnt / numOfRows + 1);
-                    console.log(`total: ${totalPage}`);
-                    console.log(`pageNo: ${pageNo - 1}`);
-                    if (pageNo - 1 == totalPage) {
+                        $("#listTab").html("");
+                        drawList(body.totalCount, body.items);
+                    } else {
+                        $("#itemCount").html("");
+                        $("#listTab").html("검색결과가 없습니다.");
                         $("#moreItemsButton").hide();
                     }
 
-                    $("#listTab").html("");
-                    drawList(body.items);
-                } else {
-                    $("#listTab").html("검색결과가 없습니다.");
-                    $("#moreItemsButton").hide();
+                    $("#spinner").removeClass("show");
                 }
+            );
+        } else {
+            // 빈 값이 아닌경우 키워드 검색을 진행
+            searchKey = $(this).val();
 
-                $("#spinner").removeClass("show");
-            }
-        );
+            $("#moreItemsButton").show();
+            $("#moreItemsButton").addClass("searched");
+            $("#spinner").addClass("show");
+            console.log(code);
+
+            ajaxRequest(
+                searchedContentUrl,
+                {
+                    numOfRows: numOfRows,
+                    pageNo: pageNo++,
+                    MobileOS: "ETC",
+                    MobileApp: "AppTest",
+                    serviceKey: apiKey,
+                    _type: "json",
+                    keyword: searchKey,
+                    contentTypeId: 12,
+                    ...(code != 0 ? { areaCode: code } : {}),
+                },
+                function (data) {
+                    console.log(data);
+                    if (data.response.body.totalCount != 0) {
+                        let body = data.response.body;
+
+                        totalCnt = body.totalCount;
+                        totalPage = Math.floor(totalCnt / numOfRows + 1);
+                        console.log(`total: ${totalPage}`);
+                        console.log(`pageNo: ${pageNo - 1}`);
+                        if (pageNo - 1 == totalPage) {
+                            $("#moreItemsButton").hide();
+                        }
+
+                        $("#listTab").html("");
+                        drawList(body.totalCount, body.items);
+                    } else {
+                        $("#itemCount").html("");
+                        $("#listTab").html("검색결과가 없습니다.");
+                        $("#moreItemsButton").hide();
+                    }
+
+                    $("#spinner").removeClass("show");
+                }
+            );
+        }
     }
 });
+
+function makeAreaSelector() {
+    let output = `<option>전국</option>`;
+    console.log(areaCodes[0]);
+
+    ajaxRequest(
+        areaCodeUrl,
+        {
+            MobileOS: "ETC",
+            MobileApp: "AppTest",
+            serviceKey: apiKey,
+            _type: "json",
+            numOfRows: 20,
+        },
+        function (data) {
+            let items = data.response.body.items;
+            for (let i = 0; i < items.item.length; i++) {
+                let key = items.item[i].name;
+                let value = items.item[i].code;
+                areaCodes[key] = value;
+                output += `<option>${key}</option>`;
+            }
+            console.log(areaCodes);
+
+            $("#selectArea").html(output);
+        }
+    );
+}
+
+// 검색 함수 빼두기
+function search() {}

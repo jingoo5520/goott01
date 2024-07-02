@@ -52,8 +52,17 @@
             crossorigin="anonymous"
         ></script>
     </head>
-    <style></style>
+
     <body>
+        <!-- Spinner Start -->
+        <div
+            id="spinner"
+            class="w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
+        >
+            <div class="spinner-grow text-primary" role="status"></div>
+        </div>
+        <!-- Spinner End -->
+
         <!-- Navbar start -->
         <div class="navbarArea"></div>
         <!-- Navbar End -->
@@ -62,20 +71,18 @@
         <div class="headerArea"></div>
         <!-- Header End -->
 
-        <div class="container-fluid blog py-5">
-            <div class="container py-5">
-                <div id="favoriteListTab" class="row g-4"></div>
-                <!-- Spinner Start -->
-                <div
-                    id="spinner"
-                    class="w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
-                >
-                    <div class="spinner-grow text-primary" role="status"></div>
-                </div>
-                <!-- Spinner End -->
-
-                <!-- <button id="moreItemsButton" class="mt-4">더보기</button> -->
+        <div class="container py-5">
+            <div id="favoriteListTab" class="row g-4"></div>
+            <!-- Spinner Start -->
+            <div
+                id="spinner"
+                class="w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
+            >
+                <div class="spinner-grow text-primary" role="status"></div>
             </div>
+            <!-- Spinner End -->
+
+            <!-- <button id="moreItemsButton" class="mt-4">더보기</button> -->
         </div>
 
         <!-- Footer Start -->

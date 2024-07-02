@@ -1,3 +1,18 @@
+.bg-breadcrumb {
+    background: none;
+}
+
+.header-subtitle {
+    color: #757575;
+}
+
+.form-select {
+    min-width: 150px;
+    width: 25%;
+}
+
+/* list-start */
+
 .primary-color {
     color: skyblue;
 }
@@ -35,3 +50,78 @@
     top: 20px;
     right: 20px;
 }
+
+.fa-heart {
+    font-size: 30px;
+}
+
+#moreItemsButtonArea {
+    display: flex;
+    justify-content: center;
+}
+
+/* list-end */
+
+/* sub-start */
+
+#commonInfoArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#imgArea {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    height: 400px;
+}
+
+.carousel,
+.carousel-item,
+.carousel-inner {
+    width: 100%;
+    height: 100%;
+}
+
+#imgArea img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nav-pills {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    width: 60%;
+}
+
+table th {
+    width: 20%;
+    border: 3px solid rgba(211, 211, 211, 0.2);
+    border-left: none;
+    text-align: center;
+    color: var(--bs-primary);
+}
+
+table td {
+    border: 3px solid rgba(211, 211, 211, 0.2);
+    border-right: none;
+    padding: 0px 10px;
+}
+
+#infoArea {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#mapArea {
+    width: 60%;
+    height: 400px;
+}
+
+/* sub-end */
