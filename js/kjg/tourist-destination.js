@@ -23,12 +23,6 @@ $(function () {
     $(".footerArea").html(getFooter());
     $(".copyrightArea").html(getCopyright());
 
-    $("#selectArea").html(`
-                <option>1</option>
-                
-                <option>3</option>
-                <option>4</option>`);
-
     ajaxRequest(
         areaBasedContentsUrl,
         {
@@ -128,7 +122,7 @@ $(function () {
 
 function makeListItem(title, img, contentId, isFavorite) {
     let item = `
-        <div class="col-lg-6 col-xl-3">
+        <div class="col-lg-6 col-xl-3 list-item-area">
             <div class="list-item" data-contentId="${contentId}" data-img="${img}" data-title="${title}" >
                 <div class="list-img">
                     <img
@@ -187,7 +181,7 @@ function drawList(totalCount, list) {
 }
 
 // 키워드 검색
-$("#searchBar").on("keydown", function (e) {
+$("#searchBar-text").on("keydown", function (e) {
     pageNo = 1;
 
     if (e.key == "Enter") {

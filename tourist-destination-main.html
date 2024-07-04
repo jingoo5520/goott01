@@ -52,7 +52,7 @@
             crossorigin="anonymous"
         ></script>
     </head>
-    <style></style>
+
     <body>
         <!-- Navbar start -->
         <div class="navbarArea"></div>
@@ -65,17 +65,22 @@
         <!-- SearchPanel Start -->
 
         <div class="container">
-            <select id="selectArea" class="form-select mt-2"></select>
+            <div class="searchBar background-color-primary mt-4">
+                <select
+                    id="selectArea"
+                    class="searchBar-select-area background-color-primary"
+                ></select>
+                <div class="input-group">
+                    <input
+                        id="searchBar-text"
+                        class=""
+                        type="text"
+                        class="form-control"
+                        placeholder="Search"
+                    />
 
-            <div class="input-group mt-2">
-                <input
-                    id="searchBar"
-                    class="w-50"
-                    type="text"
-                    class="form-control"
-                    placeholder="Search"
-                />
-                <button class="btn btn-primary" type="submit">Search</button>
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
             </div>
         </div>
 
