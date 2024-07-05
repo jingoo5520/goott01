@@ -182,14 +182,53 @@ function drawList(totalCount, list) {
 
 // 키워드 검색
 $("#searchBar-text").on("keydown", function (e) {
+    search(0, e);
+});
+
+$(".fa-magnifying-glass").on("click", function (e) {
+    search(1, e);
+});
+
+function makeAreaSelector() {
+    let output = `<option>전국</option>`;
+    // console.log(areaCodes[0]);
+
+    ajaxRequest(
+        areaCodeUrl,
+        {
+            MobileOS: "ETC",
+            MobileApp: "AppTest",
+            serviceKey: apiKey,
+            _type: "json",
+            numOfRows: 20,
+        },
+        function (data) {
+            let items = data.response.body.items;
+            for (let i = 0; i < items.item.length; i++) {
+                let key = items.item[i].name;
+                let value = items.item[i].code;
+                areaCodes[key] = value;
+                output += `<option>${key}</option>`;
+            }
+            // 여기서 에러 조심
+            console.log(areaCodes);
+
+            $("#selectArea").html(output);
+        }
+    );
+}
+
+// 검색 함수 빼두기
+function search(type, e) {
     pageNo = 1;
 
-    if (e.key == "Enter") {
+    if (e.key == "Enter" || type == 1) {
         let code = areaCodes[$("#selectArea").val()];
-        console.log($(this).val());
+        console.log($("#searchBar-text").val());
 
+        searchKey = $("#searchBar-text").val();
         // 빈 값인 경우 지역기반 검색을 실행
-        if ($(this).val() == null || $(this).val() == "") {
+        if (searchKey == null || searchKey == "") {
             ajaxRequest(
                 areaBasedContentsUrl,
                 {
@@ -227,7 +266,6 @@ $("#searchBar-text").on("keydown", function (e) {
             );
         } else {
             // 빈 값이 아닌경우 키워드 검색을 진행
-            searchKey = $(this).val();
 
             $("#moreItemsButton").show();
             $("#moreItemsButton").addClass("searched");
@@ -273,35 +311,4 @@ $("#searchBar-text").on("keydown", function (e) {
             );
         }
     }
-});
-
-function makeAreaSelector() {
-    let output = `<option>전국</option>`;
-    console.log(areaCodes[0]);
-
-    ajaxRequest(
-        areaCodeUrl,
-        {
-            MobileOS: "ETC",
-            MobileApp: "AppTest",
-            serviceKey: apiKey,
-            _type: "json",
-            numOfRows: 20,
-        },
-        function (data) {
-            let items = data.response.body.items;
-            for (let i = 0; i < items.item.length; i++) {
-                let key = items.item[i].name;
-                let value = items.item[i].code;
-                areaCodes[key] = value;
-                output += `<option>${key}</option>`;
-            }
-            console.log(areaCodes);
-
-            $("#selectArea").html(output);
-        }
-    );
 }
-
-// 검색 함수 빼두기
-function search() {}

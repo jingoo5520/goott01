@@ -163,3 +163,4 @@ css
 5) 쿠키 폼?
 쿠키는 name에 contentId 주고 value에 개인꺼 상세페이지 주소
 cookie = `${contentId}=detail.html?contentid=${contentId}`;
+
