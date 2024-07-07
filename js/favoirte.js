@@ -1,5 +1,4 @@
 $(function () {
-    console.log("favorite page");
     $("#spinner").addClass("show");
 
     $(".breadcrumb").html(
@@ -24,27 +23,13 @@ $(function () {
 
     // 찜 취소 수정필요
     $("#favoriteListTab").on("click", ".favoriteButton i", function (e) {
-        console.log("찜취소 클릭");
-
         let element = $(e.target).parent().parent().parent();
 
         let contentId = element.attr("data-contentId");
-        console.log(contentId);
-        // let img = element.attr("data-img");
-        // let contentId = element.attr("data-contentId");
 
         let cookValJson = getFavCookie();
         delFavItem(cookValJson, contentId);
         drawFavList();
-        // if (e.target.classList.contains("checked")) {
-
-        // } else {
-        //     addFavItem(cookValJson, contentId, title, img);
-        // }
-
-        // e.target.classList.toggle("fa-solid");
-        // e.target.classList.toggle("fa-regular");
-        // e.target.classList.toggle("checked");
     });
 });
 
@@ -52,18 +37,18 @@ $(function () {
 function drawFavList() {
     $("#favoriteListTab").html("");
     let cookValJson = getFavCookie();
-    console.log(cookValJson);
 
     // 찜 아이템 없는 경우
     if (cookValJson == null || Object.keys(cookValJson).length == 0) {
-        $("#favoriteListTab").html("찜 항목이 없습니다.");
+        $("#favoriteListTab").html(
+            `&nbsp&nbsp&nbsp&nbsp` + "찜 항목이 없습니다."
+        );
     } else {
         for (let item in cookValJson) {
             let title = cookValJson[item].title;
             let img = cookValJson[item].postimage;
             let link = cookValJson[item].link;
             let contentId = item;
-            console.log(cookValJson[item].title);
 
             $("#favoriteListTab").append(
                 makeFavoriteListItem(contentId, title, img, link)

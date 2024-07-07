@@ -98,7 +98,6 @@ function delFavItem(cookValJson, contentId) {
     if (contentId in cookValJson) {
         delete cookValJson[contentId];
 
-        console.log(cookValJson);
         let cookieStr = JSON.stringify(cookValJson);
 
         document.cookie = `favorite_post=${cookieStr}`;

@@ -10,7 +10,6 @@ let areaCodes = {
 
 // 최초 페이지 이동시 리스트
 $(function () {
-    console.log("mainPage");
     $("#spinner").addClass("show");
 
     $(".navbarArea").html(getNavbar());
@@ -40,7 +39,6 @@ $(function () {
             totalCnt = body.totalCount;
             totalPage = Math.floor(totalCnt / numOfRows + 1);
             drawList(body.totalCount, body.items);
-            $("#spinner").removeClass("show");
         }
     );
 
@@ -48,8 +46,9 @@ $(function () {
 
     // 더보기
     $("#moreItemsButton").on("click", function () {
-        console.log(pageNo);
-        console.log(totalPage);
+        let code = areaCodes[$("#selectArea").val()];
+
+        console.log(searchKey == "");
         if (pageNo == totalPage) {
             $("#moreItemsButton").hide();
         }
@@ -58,6 +57,7 @@ $(function () {
 
         // 검색결과 더보기
         if ($("#moreItemsButton").hasClass("searched")) {
+            console.log("serached 더보기");
             ajaxRequest(
                 searchedContentUrl,
                 {
@@ -72,7 +72,7 @@ $(function () {
                 },
                 function (data) {
                     let body = data.response.body;
-                    console.log(body);
+
                     drawList(body.totalCount, body.items);
 
                     $("#spinner").removeClass("show");
@@ -80,6 +80,7 @@ $(function () {
             );
         } else {
             // 일반 더보기
+            console.log("일반 더보기");
             ajaxRequest(
                 areaBasedContentsUrl,
                 {
@@ -90,6 +91,7 @@ $(function () {
                     serviceKey: apiKey,
                     _type: "json",
                     contentTypeId: 12,
+                    ...(code != 0 ? { areaCode: code } : {}),
                 },
                 function (data) {
                     let body = data.response.body;
@@ -191,7 +193,6 @@ $(".fa-magnifying-glass").on("click", function (e) {
 
 function makeAreaSelector() {
     let output = `<option>전국</option>`;
-    // console.log(areaCodes[0]);
 
     ajaxRequest(
         areaCodeUrl,
@@ -210,8 +211,6 @@ function makeAreaSelector() {
                 areaCodes[key] = value;
                 output += `<option>${key}</option>`;
             }
-            // 여기서 에러 조심
-            console.log(areaCodes);
 
             $("#selectArea").html(output);
         }
@@ -224,11 +223,16 @@ function search(type, e) {
 
     if (e.key == "Enter" || type == 1) {
         let code = areaCodes[$("#selectArea").val()];
-        console.log($("#searchBar-text").val());
+
+        $("#moreItemsButton").show();
+        $("#moreItemsButton").addClass("searched");
+        $("#spinner").addClass("show");
 
         searchKey = $("#searchBar-text").val();
         // 빈 값인 경우 지역기반 검색을 실행
         if (searchKey == null || searchKey == "") {
+            // console.log("빈값");
+            $("#moreItemsButton").removeClass("searched");
             ajaxRequest(
                 areaBasedContentsUrl,
                 {
@@ -247,9 +251,11 @@ function search(type, e) {
 
                         totalCnt = body.totalCount;
                         totalPage = Math.floor(totalCnt / numOfRows + 1);
-                        console.log(`total: ${totalPage}`);
-                        console.log(`pageNo: ${pageNo - 1}`);
+
                         if (pageNo - 1 == totalPage) {
+                            console.log(totalCnt);
+                            console.log(pageNo);
+                            console.log(totalPage);
                             $("#moreItemsButton").hide();
                         }
 
@@ -257,7 +263,7 @@ function search(type, e) {
                         drawList(body.totalCount, body.items);
                     } else {
                         $("#itemCount").html("");
-                        $("#listTab").html("검색결과가 없습니다.");
+                        $("#listTab").html(`${nbsp}검색결과가 없습니다.`);
                         $("#moreItemsButton").hide();
                     }
 
@@ -266,11 +272,6 @@ function search(type, e) {
             );
         } else {
             // 빈 값이 아닌경우 키워드 검색을 진행
-
-            $("#moreItemsButton").show();
-            $("#moreItemsButton").addClass("searched");
-            $("#spinner").addClass("show");
-            console.log(code);
 
             ajaxRequest(
                 searchedContentUrl,
@@ -286,15 +287,15 @@ function search(type, e) {
                     ...(code != 0 ? { areaCode: code } : {}),
                 },
                 function (data) {
-                    console.log(data);
                     if (data.response.body.totalCount != 0) {
                         let body = data.response.body;
 
                         totalCnt = body.totalCount;
                         totalPage = Math.floor(totalCnt / numOfRows + 1);
-                        console.log(`total: ${totalPage}`);
-                        console.log(`pageNo: ${pageNo - 1}`);
+
                         if (pageNo - 1 == totalPage) {
+                            console.log(pageNo);
+                            console.log(totalPage);
                             $("#moreItemsButton").hide();
                         }
 
@@ -302,7 +303,9 @@ function search(type, e) {
                         drawList(body.totalCount, body.items);
                     } else {
                         $("#itemCount").html("");
-                        $("#listTab").html("검색결과가 없습니다.");
+                        $("#listTab").html(
+                            `&nbsp&nbsp&nbsp&nbsp` + `검색결과가 없습니다.`
+                        );
                         $("#moreItemsButton").hide();
                     }
 
