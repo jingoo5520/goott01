@@ -25,4 +25,37 @@
 
 ## 프로젝트 데모
 
-<img src="">
+<table>
+  <tr>
+    <td>index.html</td>
+    <td>tourist-destination-main.html</td>
+    <td>tourist-destination-sub.html
+</td>
+    
+  </tr>
+  <tr>
+    <td><img width=400px src="https://github.com/jingoo5520/goott_mini_project1/assets/92459650/a38dc86d-dc74-4a1c-b946-2b40001a6bc5"></td>
+    <td><img width=400px src="https://github.com/jingoo5520/goott_mini_project1/assets/92459650/4c76145f-b6b7-497d-976a-03cba46197ef"></td>
+    <td><img width=400px src="https://github.com/jingoo5520/goott_mini_project1/assets/92459650/ce079900-e016-48ef-9fe1-27f77c319efc"></td>
+    
+  </tr>
+</table>
+
+<br>
+
+## 설치
+
+### clone code
+
+```
+git clone https://github.com/jingoo5520/goott_mini_project1.git
+```
+
+### move project dir
+
+```
+cd goott_mini_project1
+```
+
+### open index.html
+
