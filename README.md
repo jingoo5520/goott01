@@ -21,6 +21,13 @@
 - 더보기 기능
 - 키워드, 지역 검색 기능
 
+### Description
+
+- 총 8명의 조원
+- index.html, favorite.html 은 함께 작성
+- 각 카테고리(총 8개)의 main, detail 페이지는 개인적으로 작성
+- 각 카테고리의 좋아요가 클릭된 아이템들은 favorite.html 페이지에서 모아 볼 수 있음
+
 <br>
 
 ## Demo
