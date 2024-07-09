@@ -1,7 +1,6 @@
 let loadedTabs = [false, false];
 
 $(function () {
-    console.log("detailPage");
     let url = location.href;
 
     let contentId = url.split("contentid=")[1];

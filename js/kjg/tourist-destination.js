@@ -10,7 +10,6 @@ let areaCodes = {
 
 // 최초 페이지 이동시 리스트
 $(function () {
-    console.log("mainPage");
     $("#spinner").addClass("show");
 
     $(".navbarArea").html(getNavbar());
@@ -40,7 +39,7 @@ $(function () {
             totalCnt = body.totalCount;
             totalPage = Math.floor(totalCnt / numOfRows + 1);
             drawList(body.totalCount, body.items);
-            $("#spinner").removeClass("show");
+            // $("#spinner").removeClass("show");
         }
     );
 
@@ -48,16 +47,16 @@ $(function () {
 
     // 더보기
     $("#moreItemsButton").on("click", function () {
-        console.log(pageNo);
-        console.log(totalPage);
+        let code = areaCodes[$("#selectArea").val()];
+
         if (pageNo == totalPage) {
             $("#moreItemsButton").hide();
         }
 
         $("#spinner").addClass("show");
 
-        // 검색결과 더보기
         if ($("#moreItemsButton").hasClass("searched")) {
+            // 검색결과 더보기
             ajaxRequest(
                 searchedContentUrl,
                 {
@@ -69,10 +68,11 @@ $(function () {
                     _type: "json",
                     keyword: searchKey,
                     contentTypeId: 12,
+                    ...(code != 0 ? { areaCode: code } : {}),
                 },
                 function (data) {
                     let body = data.response.body;
-                    console.log(body);
+
                     drawList(body.totalCount, body.items);
 
                     $("#spinner").removeClass("show");
@@ -90,6 +90,7 @@ $(function () {
                     serviceKey: apiKey,
                     _type: "json",
                     contentTypeId: 12,
+                    ...(code != 0 ? { areaCode: code } : {}),
                 },
                 function (data) {
                     let body = data.response.body;
@@ -191,7 +192,6 @@ $(".fa-magnifying-glass").on("click", function (e) {
 
 function makeAreaSelector() {
     let output = `<option>전국</option>`;
-    // console.log(areaCodes[0]);
 
     ajaxRequest(
         areaCodeUrl,
@@ -211,7 +211,6 @@ function makeAreaSelector() {
                 output += `<option>${key}</option>`;
             }
             // 여기서 에러 조심
-            console.log(areaCodes);
 
             $("#selectArea").html(output);
         }
@@ -223,8 +222,8 @@ function search(type, e) {
     pageNo = 1;
 
     if (e.key == "Enter" || type == 1) {
+        $("#moreItemsButton").show();
         let code = areaCodes[$("#selectArea").val()];
-        console.log($("#searchBar-text").val());
 
         searchKey = $("#searchBar-text").val();
         // 빈 값인 경우 지역기반 검색을 실행
@@ -247,8 +246,7 @@ function search(type, e) {
 
                         totalCnt = body.totalCount;
                         totalPage = Math.floor(totalCnt / numOfRows + 1);
-                        console.log(`total: ${totalPage}`);
-                        console.log(`pageNo: ${pageNo - 1}`);
+
                         if (pageNo - 1 == totalPage) {
                             $("#moreItemsButton").hide();
                         }
@@ -270,7 +268,6 @@ function search(type, e) {
             $("#moreItemsButton").show();
             $("#moreItemsButton").addClass("searched");
             $("#spinner").addClass("show");
-            console.log(code);
 
             ajaxRequest(
                 searchedContentUrl,
@@ -286,14 +283,12 @@ function search(type, e) {
                     ...(code != 0 ? { areaCode: code } : {}),
                 },
                 function (data) {
-                    console.log(data);
                     if (data.response.body.totalCount != 0) {
                         let body = data.response.body;
 
                         totalCnt = body.totalCount;
                         totalPage = Math.floor(totalCnt / numOfRows + 1);
-                        console.log(`total: ${totalPage}`);
-                        console.log(`pageNo: ${pageNo - 1}`);
+
                         if (pageNo - 1 == totalPage) {
                             $("#moreItemsButton").hide();
                         }

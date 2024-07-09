@@ -32,8 +32,6 @@ function ajaxRequest(baseUrl, params, successCallback) {
         url += `${key}=${params[key]}&`;
     }
 
-    console.log(url);
-
     $.ajax({
         url: url, // url
         type: "get", // method
@@ -98,7 +96,6 @@ function delFavItem(cookValJson, contentId) {
     if (contentId in cookValJson) {
         delete cookValJson[contentId];
 
-        console.log(cookValJson);
         let cookieStr = JSON.stringify(cookValJson);
 
         document.cookie = `favorite_post=${cookieStr}`;
