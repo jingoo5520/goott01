@@ -39,7 +39,7 @@ $(function () {
             totalCnt = body.totalCount;
             totalPage = Math.floor(totalCnt / numOfRows + 1);
             drawList(body.totalCount, body.items);
-            // $("#spinner").removeClass("show");
+            $("#spinner").removeClass("show");
         }
     );
 
@@ -221,8 +221,9 @@ function makeAreaSelector() {
 function search(type, e) {
     pageNo = 1;
 
+    $("#moreItemsButton").show();
+
     if (e.key == "Enter" || type == 1) {
-        $("#moreItemsButton").show();
         let code = areaCodes[$("#selectArea").val()];
 
         searchKey = $("#searchBar-text").val();
